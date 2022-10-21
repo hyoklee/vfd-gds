@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/hyoklee/vfd-gds/workflows/vfd-gds/badge.svg)](https://github.com/hyoklee/vfd-gds/actions)
+[![Test HDF5 GPUDirect Storage VFD](https://github.com/hyoklee/vfd-gds/actions/workflows/main.yml/badge.svg)](https://github.com/hyoklee/vfd-gds/actions/workflows/main.yml)
 
 # HDF5 Nvidia GPUDirect Storage VFD
 
