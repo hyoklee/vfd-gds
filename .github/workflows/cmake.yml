@@ -1,4 +1,4 @@
-name: Test HDF5 GPUDirect Storage VFD
+name: Test CUDA Ubuntu-2004
 on:
   push:
     branches: [ master ]
