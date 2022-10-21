@@ -1,4 +1,4 @@
-name: Test HDF5 GPUDirect Storage VFD
+name: Install GDS/CUDA via Yum
 on:
   push:
     branches: [ master ]
