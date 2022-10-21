@@ -1,4 +1,4 @@
-name: Test HDF5 GPUDirect Storage VFD
+name: Build with cuda-keyring_1.0-1_all.deb
 on:
   push:
     branches: [ master ]
