@@ -1,4 +1,5 @@
 [![Test HDF5 GPUDirect Storage VFD](https://github.com/hyoklee/vfd-gds/actions/workflows/main.yml/badge.svg)](https://github.com/hyoklee/vfd-gds/actions/workflows/main.yml)
+[![Install GDS/CUDA via Yum](https://github.com/hyoklee/vfd-gds/actions/workflows/yum.yml/badge.svg)](https://github.com/hyoklee/vfd-gds/actions/workflows/yum.yml)
 
 # HDF5 Nvidia GPUDirect Storage VFD
 
