@@ -1,16 +1,16 @@
-name: Install CUDA Ubuntu-2004
+name: lin gds
 on:
   push:
     branches: [ master ]
   workflow_dispatch:
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - name: Checkout vfd-gds
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Checkout HDF5
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         repository: HDFGroup/hdf5
         path: hdf5
@@ -23,10 +23,10 @@ jobs:
     #    cuda: '11.2.2'
     - name: Install GDS/CUDA
       run: |
-        wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
-        sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
-        sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
-        sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /"
+        wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-ubuntu2404.pin
+        sudo mv cuda-ubuntu2404.pin /etc/apt/preferences.d/cuda-repository-pin-600
+        sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/3bf863cc.pub
+        sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/ /"
         sudo apt-get update
         sudo apt-get -y install cuda
     - name: Install HDF5
@@ -43,9 +43,10 @@ jobs:
       env:
         HDF5_PLUGIN_PATH: /usr/local/lib
         LD_LIBRARY_PATH: /usr/local/lib:$LD_LIBRARY_PATH
-        CUDACXX: /usr/local/cuda-11.5/bin/nvcc
+        CUDACXX: /usr/local/cuda-12.6/bin/nvcc
       run: |
         set
+        ls /usr/local/
         mkdir build
         cd build
         cmake .. -DHDF5_DIR=/usr/local
