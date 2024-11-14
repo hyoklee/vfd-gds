@@ -1,7 +1,7 @@
 name: lin gds
 on:
   push:
-    branches: [ master ]
+    branches: [ master- ]
   workflow_dispatch:
 jobs:
   build:

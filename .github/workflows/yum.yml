@@ -1,7 +1,7 @@
 name: Install GDS/CUDA via Yum
 on:
   push:
-    branches: [ master ]
+    branches: [ master- ]
   workflow_dispatch:
 jobs:
   build:
