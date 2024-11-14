@@ -1,4 +1,4 @@
-name: lin gds
+name: lin-24 gds
 on:
   push:
     branches: [ master ]
@@ -22,7 +22,8 @@ jobs:
         wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
         sudo dpkg -i cuda-keyring_1.1-1_all.deb
         sudo apt-get update	
-        sudo apt-get -y install cuda
+        # sudo apt-get -y install cuda
+        sudo apt-get -y cuda-nvcc-12-6 libcufile-dev-12-6
     - name: Install HDF5
       run: |
         cmake --version
@@ -43,7 +44,7 @@ jobs:
         ls /usr/local/
         mkdir build
         cd build
-        cmake .. -DHDF5_DIR=/usr/local
+        cmake -DHDF5_DIR=/usr/local -DSITE:STRING=ubu-24.04 -DBUILDNAME:STRING="gds" -DCTEST_DROP_SITE_INIT:STRING="my.cdash.org" -DCTEST_DROP_LOCATION_INIT="/submit.php?project=HDF5" .. 
         sudo make -j2 install
         ls /usr/local/lib
-        ctest --output-on-failure
+        ctest -T Experimental

@@ -1,4 +1,4 @@
-name: Build with cuda-keyring_1.0-1_all.deb
+name: lin gds
 on:
   push:
     branches: [ master ]
@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout vfd-gds
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Checkout HDF5
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: HDFGroup/hdf5
         path: hdf5
@@ -19,10 +19,10 @@ jobs:
 
     - name: Install GDS/CUDA
       run: |
-        wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb
-        sudo dpkg -i cuda-keyring_1.0-1_all.deb
+        wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+        sudo dpkg -i cuda-keyring_1.1-1_all.deb
         sudo apt-get update
-        sudo apt-get install -y cuda-nvcc-11-8 libcufile-dev-11-8
+        sudo apt-get install -y cuda-nvcc-12-6 libcufile-dev-12-6
         echo "PATH=/usr/local/cuda/bin${PATH:+:${PATH}}" >> $GITHUB_ENV
         echo "CUDA_PATH=/usr/local/cuda" >> $GITHUB_ENV
         echo "LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:${LD_LIBRARY_PATH}" >> $GITHUB_ENV
