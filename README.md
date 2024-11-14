@@ -1,6 +1,5 @@
-[![Build with cuda-keyring_1.0-1_all.deb](https://github.com/hyoklee/vfd-gds/actions/workflows/main.yml/badge.svg)](https://github.com/hyoklee/vfd-gds/actions/workflows/main.yml)
-[![Install GDS/CUDA via Yum](https://github.com/hyoklee/vfd-gds/actions/workflows/yum.yml/badge.svg)](https://github.com/hyoklee/vfd-gds/actions/workflows/yum.yml)
-[![Install CUDA Ubuntu-2004](https://github.com/hyoklee/vfd-gds/actions/workflows/cmake.yml/badge.svg)](https://github.com/hyoklee/vfd-gds/actions/workflows/cmake.yml)
+[![lin gds](https://github.com/hyoklee/vfd-gds/actions/workflows/main.yml/badge.svg)](https://github.com/hyoklee/vfd-gds/actions/workflows/main.yml)
+[![lin-24 gds](https://github.com/hyoklee/vfd-gds/actions/workflows/cmake.yml/badge.svg)](https://github.com/hyoklee/vfd-gds/actions/workflows/cmake.yml)
 
 # HDF5 Nvidia GPUDirect Storage VFD
 
