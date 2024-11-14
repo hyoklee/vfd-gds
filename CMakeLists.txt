@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
-# cmake_minimum_required(VERSION 2.8.12.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.23 FATAL_ERROR)
 
 # Setup cmake policies.
 foreach(policy
@@ -99,7 +98,7 @@ set(HDF5_VFD_GDS_EXT_LIB_DEPENDENCIES
 #------------------------------------------------------------------------------
 # Locate HDF5
 #------------------------------------------------------------------------------
-find_package(HDF5 1.13.0 NO_MODULE NAMES hdf5 COMPONENTS C shared)
+find_package(HDF5 1.14.0 NO_MODULE NAMES hdf5 COMPONENTS C shared)
 if(HDF5_FOUND)
   set(HDF5_C_SHARED_LIBRARY hdf5-shared)
   if(NOT TARGET ${HDF5_C_SHARED_LIBRARY})
@@ -113,7 +112,7 @@ if(HDF5_FOUND)
   set(HDF5_VFD_GDS_USE_SYSTEM_CMAKE_HDF5 1)
 else()
   # Allow for HDF5 autotools builds
-  find_package(HDF5 1.13.0 MODULE REQUIRED)
+  find_package(HDF5 1.14.0 MODULE REQUIRED)
   set(HDF5_VFD_GDS_EXT_INCLUDE_DEPENDENCIES
     ${HDF5_VFD_GDS_EXT_INCLUDE_DEPENDENCIES}
     ${HDF5_INCLUDE_DIRS}
