@@ -47,4 +47,4 @@ jobs:
         cmake -DHDF5_DIR=/usr/local -DSITE:STRING=ubu-24.04 -DBUILDNAME:STRING="gds" -DCTEST_DROP_SITE_INIT:STRING="my.cdash.org" -DCTEST_DROP_LOCATION_INIT="/submit.php?project=HDF5" .. 
         sudo make -j2 install
         ls /usr/local/lib
-        ctest -T Experimental
+        ctest -D Experimental
