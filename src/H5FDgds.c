@@ -487,8 +487,14 @@ H5FD__gds_open(const char *name, unsigned flags, hid_t fapl_id, haddr_t maxaddr)
         o_flags |= O_EXCL;
 
     /* Open the file */
-    if ((fd = open(name, o_flags, H5FD_GDS_POSIX_CREATE_MODE_RW)) < 0)
+    if ((fd = open(name, o_flags, H5FD_GDS_POSIX_CREATE_MODE_RW)) < 0) {
+        /* HDF5 probes for file existence by calling open() without O_CREAT
+         * before deciding to create a new file.  ENOENT in that case is
+         * expected; report it silently so the caller can retry with O_CREAT. */
+        if (errno == ENOENT && !(o_flags & O_CREAT))
+            H5FD_GDS_GOTO_DONE(NULL);
         H5FD_GDS_SYS_GOTO_ERROR(H5E_FILE, H5E_CANTOPENFILE, NULL, "unable to open file");
+    }
 
     if (fstat(fd, &sb) < 0)
         H5FD_GDS_SYS_GOTO_ERROR(H5E_FILE, H5E_BADFILE, NULL, "unable to fstat file");
