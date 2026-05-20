@@ -48,7 +48,7 @@ target_link_libraries(hdf5_vfd_gds
   ${HDF5_VFD_GDS_EXT_PKG_DEPENDENCIES}
   PRIVATE
   "$<$<BOOL:${CUDAToolkit_FOUND}>:CUDA::cudart>"
-  "$<$<BOOL:${CUDAToolkit_FOUND}>:CUDA::cuFile>"
+  "$<$<TARGET_EXISTS:CUDA::cuFile>:CUDA::cuFile>"
   "$<$<BOOL:${CUDAToolkit_FOUND}>:CUDA::cuda_driver>"
   )
 hdf5_vfd_gds_set_lib_options(hdf5_vfd_gds "hdf5_vfd_gds" ${HDF5_VFD_GDS_LIBTYPE})

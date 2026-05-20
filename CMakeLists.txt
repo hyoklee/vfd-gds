@@ -75,10 +75,47 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${HDF5_VFD_GDS_CMAKE_MODULE_PATH})
 # Try to locate cufile library
 find_package(CUDAToolkit REQUIRED)
 
+# cufile.h and libcufile may reside outside the main CUDAToolkit tree when the
+# GDS SDK is installed separately. Search common extra paths.
+find_path(CUFILE_INCLUDE_DIR cufile.h
+  HINTS
+    ${CUDAToolkit_INCLUDE_DIRS}
+    ${CUDA_INCLUDE_DIRS}
+  PATHS
+    /usr/local/cuda/include
+    /soft/compilers/cudatoolkit/cuda-11.8.0/include
+    /soft/applications/dask_rapids/rapids-24.10_polaris/targets/x86_64-linux/include
+    /soft/applications/dask_rapids/rapids-24.08_polaris/targets/x86_64-linux/include
+)
+
+find_library(CUFILE_LIBRARY
+  NAMES cufile
+  HINTS
+    ${CUDAToolkit_LIBRARY_DIR}
+  PATHS
+    /soft/compilers/cudatoolkit/cuda-11.8.0/lib64
+    /soft/applications/dask_rapids/rapids-24.10_polaris/lib
+    /soft/applications/dask_rapids/rapids-24.10_polaris/targets/x86_64-linux/lib
+    /soft/applications/dask_rapids/rapids-24.08_polaris/targets/x86_64-linux/lib
+)
+
+# If FindCUDAToolkit didn't create CUDA::cuFile (library not in standard CUDA
+# tree), create the imported target manually so downstream targets can link it.
+if(CUFILE_LIBRARY AND CUFILE_INCLUDE_DIR AND NOT TARGET CUDA::cuFile)
+  add_library(CUDA::cuFile SHARED IMPORTED)
+  set_target_properties(CUDA::cuFile PROPERTIES
+    IMPORTED_LOCATION "${CUFILE_LIBRARY}"
+    INTERFACE_INCLUDE_DIRECTORIES "${CUFILE_INCLUDE_DIR}"
+  )
+endif()
+
 set(HDF5_VFD_GDS_EXT_INCLUDE_DEPENDENCIES
   ${HDF5_VFD_GDS_EXT_INCLUDE_DEPENDENCIES}
   ${CUDAToolkit_INCLUDE_DIRS}
 )
+if(CUFILE_INCLUDE_DIR AND NOT CUFILE_INCLUDE_DIR IN_LIST HDF5_VFD_GDS_EXT_INCLUDE_DEPENDENCIES)
+  list(APPEND HDF5_VFD_GDS_EXT_INCLUDE_DEPENDENCIES ${CUFILE_INCLUDE_DIR})
+endif()
 set(HDF5_VFD_GDS_EXT_LIB_DEPENDENCIES
   ${HDF5_VFD_GDS_EXT_LIB_DEPENDENCIES}
 )

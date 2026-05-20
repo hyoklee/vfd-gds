@@ -48,12 +48,25 @@ endforeach()
 
 #-----------------------------------------------------------------------------
 # Tests
+# Run via mpiexec so MPI initialises correctly on compute nodes.
+# CUDA_VISIBLE_DEVICES=0 pins the single rank to GPU 0, which is required
+# before cuFileDriverOpen() is called inside the VFD.
 #-----------------------------------------------------------------------------
+set(HDF5_VFD_GDS_CUFILE_JSON "" CACHE STRING
+  "Path to cufile.json passed as CUFILE_ENV_PATH_JSON to the test (optional)")
+
 foreach(vfd_test ${vfd_gds_tests})
   add_test(NAME "${vfd_test}"
-    COMMAND $<TARGET_FILE:${vfd_test}>
+    COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} 1 $<TARGET_FILE:${vfd_test}>
   )
+  set(_test_env
+    "HDF5_PLUGIN_PATH=${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    "CUDA_VISIBLE_DEVICES=0"
+  )
+  if(HDF5_VFD_GDS_CUFILE_JSON)
+    list(APPEND _test_env "CUFILE_ENV_PATH_JSON=${HDF5_VFD_GDS_CUFILE_JSON}")
+  endif()
   set_tests_properties(${vfd_test} PROPERTIES
-    ENVIRONMENT "HDF5_PLUGIN_PATH=${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+    ENVIRONMENT "${_test_env}"
   )
 endforeach()
